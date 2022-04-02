@@ -104,11 +104,11 @@ namespace zich {
     }
 
     double Matrix::multiplicate_row_with_col(const Matrix &otherMat, const int row_to_mult, const int col_to_mult) {
-        double sum = 0;
+        double result = 0;
         for (int i = 0; i < this->col; i++) {
-            sum += this->data[(unsigned int)(this->col * row_to_mult + i)] * otherMat.data[(unsigned int)(otherMat.col * i + col_to_mult)];
+            result += this->data[(unsigned int)(this->col * row_to_mult + i)] * otherMat.data[(unsigned int)(otherMat.col * i + col_to_mult)];
         }
-        return sum;
+        return result;
     }
 
     Matrix Matrix::operator*(const Matrix &otherMat) {
@@ -146,13 +146,13 @@ namespace zich {
     }
 
     double Matrix::sum_of_matrix() const {
-        double sum = 0;
+        double result = 0;
         for (int i = 0; i < this->row; i++) {
             for (int j = 0; j < this->col; j++) {
-                sum += data[(unsigned int)(i * (this->col) + j)];
+                result += data[(unsigned int)(i * (this->col) + j)];
             }
         }
-        return sum;
+        return result;
     }
 
     bool Matrix::operator>(const Matrix &otherMat) {
