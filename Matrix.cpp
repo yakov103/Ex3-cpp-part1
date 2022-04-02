@@ -1,196 +1,212 @@
 #include "Matrix.hpp"
-using namespace std;
-namespace zich { 
 
-    Matrix::Matrix (const vector<double> newData, const int newRow, const int newCol){
-        if (newRow < 1 || newCol < 1 ){ 
-            throw runtime_error("cols and rows must be possitve ");
+namespace zich {
+
+    Matrix::Matrix(const vector<double> newData, const int newRow, const int newCol) {
+        if (newRow <= 0 || newCol <= 0) {
+            throw runtime_error("The size must be positive");
         }
-        this->data = newData; 
-        this->rows = newRow ; 
-        this->cols = newCol;
 
+        this->data = newData;
+        row = newRow;
+        col = newCol;
     }
 
-
-
-
-        Matrix Matrix::operator+(const Matrix &b){
-        
-        if (this.cols != b.cols && this.rows != b.rows ){ 
-            throw runtime_error ("size of Matrix must be the samw to sum them ! "); 
-        }
-        unsigned int size_of_matrix = this.rows * this.cols ; 
-        vector <double> newMatrix ; 
-        newMatrix.resize(size_of_matrix);
-        for (int i = 0 ; i < size_of_matrix ; i++){
-            newMatrix[i]= this->data[i] + b.data[i];
+    Matrix Matrix::operator+(const Matrix &otherMat) {
+        if (this->row != otherMat.row || this->col != otherMat.col) {
+            throw runtime_error("The matrices should be the same size");
         }
 
-        return Matrix(newMatrix, this->rows, this->cols);
+        unsigned int length = (unsigned int)(row * col);
+        vector<double> newData;
+        newData.resize(length);
+        for (unsigned int i = 0; i < length; i++) {
+            newData[i] = this->data[i] + otherMat.data[i];
+
         }
+        return Matrix(newData, row, col);
+    }
 
-
-
-        Matrix &operator++(){
-            unsigned int size_of_matrix = this.rows * this.cols ;
-            for (int i = 0 ; i < size_of_matrix ; i++){
-                this->data[i]+= 1;
+    Matrix &Matrix::operator++() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] += 1;
             }
+        }
         return *this;
-        }
-
-
-        Matrix operator++(const int flag);
-
-
-        Matrix &operator+=(const Matrix &b){
-            return *this + b ;
-        }
-
-
-        Matrix operator-(const Matrix &b);
-    {
-    if (this.cols != b.cols && this.rows != b.rows ){
-    throw runtime_error ("size of Matrix must be the same to sum them ! ");
-    }
-    unsigned int size_of_matrix = this.rows * this.cols ;
-    vector <double> newMatrix ;
-    newMatrix.resize(size_of_matrix);
-    for (int i = 0 ; i < size_of_matrix ; i++){
-    newMatrix[i]= this->data[i] - b.data[i];
     }
 
-    return Matrix(newMatrix,this->rows , this->cols);
-
-
-    }
-        Matrix &operator--(){
-            unsigned int size_of_matrix = this.rows * this.cols ;
-            for (int i = 0 ; i < size_of_matrix ; i++){
-                this->data[i]+= 1;
+    Matrix Matrix::operator++(const int flag) {
+        Matrix copy = *this;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] += 1;
             }
-            return *this;
         }
-        Matrix operator--(const int flag);
-
-        Matrix &operator-=(const Matrix &b){
-            return *this - b;
-        }
-
-double multiplication (const Matrix &b , const int row , const int col ){
-    double resualt = 0 ;
-    for ( unsigned int i = 0 ; i < this->cols ; i ++ ){
-        resualt += this->data[(unsigned int)(this->col * row + i)] * b.data[(unsigned int)(b.cols * i + col)];
+        return copy;
     }
-    return resualt;
 
-
-
-}
-
-
-Matrix operator*(const Matrix &b){
-          if ( this->cols != b.rows ){
-              throw runtime_error("this matrix cannot be multiplciated ! ");
-          }
-          vector <double> newMatrix ;
-          unsigned int newsize = this->rows*b.cols ;
-          newMatrix.resize(newsize );
-            for (unsigned int i = 0; i < this->rows; i++)
-            {
-                for (unsigned int j = 0; j < b.cols; j++)
-                {
-                    newMatrix[unsigned int (i*(b.cols)+j) ] = multiplication(b, i, j);
-                }
+    Matrix &Matrix::operator+=(const Matrix &otherMat) {
+        if (this->row != otherMat.row || this->col != otherMat.col) {
+            throw runtime_error("The matrices should be the same size");
+        }
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] += otherMat.data[(unsigned int)(i * col + j)];
             }
+        }
+        return *this;
+    }
 
-            return Matrix(newMatrix,this->rows, b.cols);
+    Matrix Matrix::operator-(const Matrix &otherMat) {
+        if (this->row != otherMat.row || this->col != otherMat.col) {
+            throw runtime_error("The matrices should be the same size");
         }
-        Matrix operator*(const double a){
-        Matrix mat = *this;
+        unsigned int length = (unsigned int)(row * col);
+        vector<double> newData;
+        newData.resize(length);
+        for (unsigned int i = 0; i < length; i++) {
+            newData[i] = this->data[i] - otherMat.data[i];
 
-        for (unsigned int i = 0 ; i < mat.cols * mat.rows ; i ++){
-            mat.Data[i] *=a ;
         }
-        return mat;
+        return Matrix(newData, row, col);
+    }
 
+    Matrix &Matrix::operator--() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] -= 1;
+            }
         }
-        Matrix &operator*=(const Matrix &b){
-            *this = (*this * b );
-            return *this;
-        }
+        return *this;
+    }
 
-        Matrix &operator*=(const double a){
-            *this = (*this * a);
-            return *this ;
+    Matrix Matrix::operator--(const int flag) {
+        Matrix copy = *this;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] -= 1;
+            }
         }
-     double Matrix::sumOfMat (){
-           double resualt = 0;
-           for ( unsigned int i =0 ; i < this->cols*this->rows ;i++){
-               resualt += this->data[i];
+        return copy;
+    }
 
-           }
-            return resualt;
+    Matrix &Matrix::operator-=(const Matrix &otherMat) {
+        if (this->row != otherMat.row || this->col != otherMat.col) {
+            throw runtime_error("The matrices should be the same size");
         }
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                data[(unsigned int)(i * col + j)] -= otherMat.data[(unsigned int)(i * col + j)];
+            }
+        }
+        return *this;
+    }
 
-        bool Matrix::operator>(const Matrix &b){
-            return (*this).sumOfMat() > b.sumOfMat();
+    double Matrix::multiplicate_row_with_col(const Matrix &otherMat, const int row_to_mult, const int col_to_mult) {
+        double sum = 0;
+        for (int i = 0; i < this->col; i++) {
+            sum += this->data[(unsigned int)(this->col * row_to_mult + i)] * otherMat.data[(unsigned int)(otherMat.col * i + col_to_mult)];
         }
-        bool Matrix::operator<(const Matrix &b){
-            return (*this).sumOfMat() < b.sumOfMat();
-        }
+        return sum;
+    }
 
-        bool operator==(const Matrix &b){
-            if (this->row != b.row || this->col != b.col)
-            {
+    Matrix Matrix::operator*(const Matrix &otherMat) {
+        if (this->col != otherMat.row) {
+            throw runtime_error("The sizes of the matrices do not match");
+        }
+        vector<double> n;
+        Matrix newMatrix(n, row, otherMat.col);
+        for (int i = 0; i < newMatrix.row; i++) {
+            for (int j = 0; j < newMatrix.col; j++) {
+                newMatrix.data[(unsigned int)(i * newMatrix.col + j)] = multiplicate_row_with_col(otherMat, i, j);
+            }
+        }
+        return newMatrix;
+    }
+
+    Matrix Matrix::operator*(const double scaler) {
+        Matrix newMatrix = *this;
+        for (unsigned int i = 0; i < row; i++) {
+            for (unsigned int j = 0; j < col; j++) {
+                newMatrix.data[(unsigned int)(col) * i + j] *= scaler;
+            }
+        }
+        return newMatrix;
+    }
+
+    Matrix &Matrix::operator*=(const Matrix &otherMat) {
+        *this = (*this * otherMat);
+        return *this;
+    }
+
+    Matrix &Matrix::operator*=(const double scaler) {
+        *this = (*this * scaler);
+        return *this;
+    }
+
+    double Matrix::sum_of_matrix() const {
+        double sum = 0;
+        for (int i = 0; i < this->row; i++) {
+            for (int j = 0; j < this->col; j++) {
+                sum += data[(unsigned int)(i * (this->col) + j)];
+            }
+        }
+        return sum;
+    }
+
+    bool Matrix::operator>(const Matrix &otherMat) {
+        return (*this).sum_of_matrix() > otherMat.sum_of_matrix();
+    }
+
+    bool Matrix::operator<(const Matrix &otherMat) {
+        return (*this).sum_of_matrix() < otherMat.sum_of_matrix();
+    }
+
+    bool Matrix::operator==(const Matrix &otherMat) {
+
+        if (this->row != otherMat.row || this->col != otherMat.col) {
+            return false;
+        }
+        unsigned int size = (unsigned int)(row * col);
+        for (unsigned int i = 0; i < size; i++) {
+            if (this->data[i] != otherMat.data[i]) {
                 return false;
             }
-            size_t size = (size_t)(row * col);
-            for (size_t i = 0; i < size; i++)
-            {
-                if (this->data[i] != b.data[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+        }
+        return true;
 
-        }
-        bool Matrix::operator!=(const Matrix &b){
-            return !((*this) == b);
-
-}
-        bool Matrix::operator>=(const Matrix &b){
-            return ((*this == b)|| (*this)> b );
-        }
-        bool Matrix::operator<=(const Matrix &b){
-            return ((*this == b)|| (*this)< b );
-        }
-}
-
-ostream &operator<<(ostream &COUT, const Matrix &a)
-{
-    for (int i = 0; i < a.row; i++)
-    {
-        COUT << "|";
-        for (int j = 0; j < a.col; j++)
-        {
-            COUT << a.data[(size_t)(a.col * i + j)] << " ";
-        }
-        COUT << "|" << endl;
     }
-    return COUT;
-}
-// istream &operator>>(istream &os, Matrix &mat)
-// {
 
-// }
-Matrix operator*(const double a, Matrix &b)
-{
-    return b * a;
-}
-Matrix operator-(Matrix &a)
-{
-    return a *= -1;
+    bool Matrix::operator!=(const Matrix &otherMat) {
+        return !(((*this) == otherMat));
+    }
+
+
+    bool Matrix::operator>=(const Matrix &otherMat) {
+        return ((*this) > otherMat) || ((*this) == otherMat);
+    }
+
+    bool Matrix::operator<=(const Matrix &otherMat) {
+        return ((*this) < otherMat) || ((*this) == otherMat);
+    }
+
+    ostream &operator<<(ostream &os, const Matrix &scaler) {
+        for (int i = 0; i < scaler.row; i++) {
+            os << "|";
+            for (int j = 0; j < scaler.col; j++) {
+                os << scaler.data[(unsigned int)(scaler.col * i + j)] << " ";
+            }
+            os << "|" << endl;
+        }
+        return os;
+    }
+    
+    Matrix operator*(const double scaler, Matrix &otherMat) {
+        return otherMat * scaler;
+    }
+
+    Matrix operator-(Matrix &A) {
+        return A *= -1;
+    }
 }
