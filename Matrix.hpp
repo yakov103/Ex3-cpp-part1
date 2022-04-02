@@ -38,6 +38,10 @@ namespace zich {
         bool operator>=(const Matrix &b);
         bool operator<=(const Matrix &b);
 
+        friend ostream &operator<<(ostream & COUT, const Matrix &a);
+        friend Matrix operator*(const double a, Matrix &b);
+        friend Matrix operator-(Matrix &a);
+
 
 
     }

@@ -134,23 +134,63 @@ Matrix operator*(const Matrix &b){
             return resualt;
         }
 
-        bool operator>(const Matrix &b){
-            return
+        bool Matrix::operator>(const Matrix &b){
+            return (*this).sumOfMat() > b.sumOfMat();
         }
-        bool operator<(const Matrix &b);
-        bool operator!=(const Matrix &b);
-        bool operator==(const Matrix &b);
-        bool operator>=(const Matrix &b);
-        bool operator<=(const Matrix &b);
+        bool Matrix::operator<(const Matrix &b){
+            return (*this).sumOfMat() < b.sumOfMat();
+        }
 
+        bool operator==(const Matrix &b){
+            if (this->row != b.row || this->col != b.col)
+            {
+                return false;
+            }
+            size_t size = (size_t)(row * col);
+            for (size_t i = 0; i < size; i++)
+            {
+                if (this->data[i] != b.data[i])
+                {
+                    return false;
+                }
+            }
+            return true;
 
+        }
+        bool Matrix::operator!=(const Matrix &b){
+            return !((*this) == b);
 
+}
+        bool Matrix::operator>=(const Matrix &b){
+            return ((*this == b)|| (*this)> b );
+        }
+        bool Matrix::operator<=(const Matrix &b){
+            return ((*this == b)|| (*this)< b );
+        }
+}
 
+ostream &operator<<(ostream &COUT, const Matrix &a)
+{
+    for (int i = 0; i < a.row; i++)
+    {
+        COUT << "|";
+        for (int j = 0; j < a.col; j++)
+        {
+            COUT << a.data[(size_t)(a.col * i + j)] << " ";
+        }
+        COUT << "|" << endl;
+    }
+    return COUT;
+}
+// istream &operator>>(istream &os, Matrix &mat)
+// {
 
-
-
-
-
-
-
+// }
+Matrix operator*(const double a, Matrix &b)
+{
+    return b * a;
+}
+Matrix operator-(Matrix &a)
+{
+    return a *= -1;
 }
