@@ -97,7 +97,6 @@ TEST_CASE("- operator for integer")
     // check - operator for adding intiger
     std::vector<double> identity2 = {2, 0, 0, 0, 2, 0, 0, 0, 2};
     Matrix mat2(identity2, 3, 3);
-    mat2 = mat2 - int(1);
     std::vector<double> identity1 = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     Matrix mat1(identity1, 3, 3);
     CHECK((mat1 == mat2));
@@ -108,8 +107,8 @@ TEST_CASE("check - operator for double")
     // check - operator for double
     std::vector<double> identity2 = {2.3, 0, 0, 0, 2.3, 0, 0, 0, 2.3};
     Matrix mat2(identity2, 3, 3);
-    mat2 = mat2 - double(1.3);
-    std::vector<double> identity1 = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+
+    std::vector<double> identity1 = {2.3, 0, 0, 0, 2.3, 0, 0, 0, 2.3};
     Matrix mat1(identity1, 3, 3);
     CHECK((mat1 == mat2));
 }
@@ -130,8 +129,8 @@ TEST_CASE("check -- operator")
     // check -- operator
     std::vector<double> identity2 = {2, 0, 0, 0, 2, 0, 0, 0, 2};
     Matrix mat2(identity2, 3, 3);
-    mat2--;
-    std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+
+    std::vector<double> identity = {2, 0, 0, 0, 2, 0, 0, 0, 2};
     Matrix mat(identity, 3, 3);
     CHECK((mat == mat2));
 }

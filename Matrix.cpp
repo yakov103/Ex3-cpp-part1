@@ -6,6 +6,9 @@ namespace zich {
         if (newRow <= 0 || newCol <= 0) {
             throw runtime_error("The size must be positive");
         }
+        if (newRow * newCol != newData.size()){
+            throw runtime_error("size should be in the amount of the value");
+        }
 
         this->data = newData;
         this->row = newRow;
