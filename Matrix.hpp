@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-
 using namespace std;
 namespace zich {
     class Matrix {
@@ -12,7 +11,7 @@ namespace zich {
 
 
     public:
-         Matrix( vector<double> const newData, const int newRow, const int newCol) ;
+         Matrix( vector<double> const & newData, const int newRow, const int newCol) ;
 
         double multiplicate_row_with_col(const Matrix &otherMat, const int row_to_mult, const int col_to_mult);
 
@@ -62,6 +61,15 @@ namespace zich {
         friend Matrix operator*(const double scaler, Matrix &otherMat);
 
         friend Matrix operator-(Matrix &A);
+
+        friend bool operator==(const Matrix &A , const Matrix &B); 
+
+        friend Matrix operator*(const Matrix &matrix1,const Matrix &matrix2);
+        Matrix operator-(const double);
+        Matrix operator-(const int);
+        Matrix operator+(const double);
+        Matrix operator+(const int);
+       
     };
 
 };

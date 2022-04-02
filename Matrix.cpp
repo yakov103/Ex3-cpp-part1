@@ -2,13 +2,13 @@
 
 namespace zich {
 
-    Matrix::Matrix( vector<double> const newData, const int newRow, const int newCol) {
+    Matrix::Matrix( vector<double> const & newData, const int newRow, const int newCol) {
         if (newRow <= 0 || newCol <= 0) {
             throw runtime_error("The size must be positive");
         }
 
         this->data = newData;
-        row = newRow;
+        this->row = newRow;
         col = newCol;
     }
 
@@ -209,4 +209,41 @@ namespace zich {
     Matrix operator-(Matrix &A) {
         return A *= -1;
     }
+
+         Matrix Matrix::operator-(const double number)
+    {
+        return *this;
+    };
+    Matrix Matrix::operator-(const int number)
+    {
+        return *this;
+    };
+    Matrix Matrix::operator+(const double number)
+    {
+        return *this;
+    };
+    Matrix Matrix::operator+(const int number)
+    {
+        return *this;
+    };
+
+    bool operator==(const Matrix &A , const Matrix &B){
+         if (A.row != B.row || A.col != B.col) {
+            return false;
+        }
+        unsigned int size = (unsigned int)(A.row * A.col);
+        for (unsigned int i = 0; i < size; i++) {
+            if (A.data[i] != B.data[i]) {
+                return false;
+            }
+        }
+        return true;
+      
+    }
+
+    Matrix operator*(const Matrix &matrix1,const Matrix &matrix2){
+        return matrix1;
+    }
+
+    
 }
