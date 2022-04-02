@@ -12,12 +12,13 @@ namespace zich {
 
 
     public:
+         Matrix( vector<double> const newData, const int newRow, const int newCol) ;
 
         double multiplicate_row_with_col(const Matrix &otherMat, const int row_to_mult, const int col_to_mult);
 
         double sum_of_matrix() const;
 
-        Matrix(const vector<double> newData, const int newRow, const int newCol);
+        
 
         Matrix operator+(const Matrix &otherMat);
 
@@ -56,7 +57,7 @@ namespace zich {
 
         bool operator<=(const Matrix &otherMat);
 
-        friend ostream &operator<<(ostream &os, const Matrix &scaler);
+        friend ostream &operator<<(ostream &COUT, const Matrix &scaler);
 
         friend Matrix operator*(const double scaler, Matrix &otherMat);
 

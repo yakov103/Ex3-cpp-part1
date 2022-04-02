@@ -2,7 +2,7 @@
 
 namespace zich {
 
-    Matrix::Matrix(const vector<double> newData, const int newRow, const int newCol) {
+    Matrix::Matrix( vector<double> const newData, const int newRow, const int newCol) {
         if (newRow <= 0 || newCol <= 0) {
             throw runtime_error("The size must be positive");
         }
@@ -191,15 +191,15 @@ namespace zich {
         return ((*this) < otherMat) || ((*this) == otherMat);
     }
 
-    ostream &operator<<(ostream &os, const Matrix &scaler) {
+    ostream &operator<<(ostream &COUT, const Matrix &scaler) {
         for (int i = 0; i < scaler.row; i++) {
-            os << "|";
+            COUT << "|";
             for (int j = 0; j < scaler.col; j++) {
-                os << scaler.data[(unsigned int)(scaler.col * i + j)] << " ";
+                COUT << scaler.data[(unsigned int)(scaler.col * i + j)] << " ";
             }
-            os << "|" << endl;
+            COUT << "|" << endl;
         }
-        return os;
+        return COUT;
     }
     
     Matrix operator*(const double scaler, Matrix &otherMat) {
