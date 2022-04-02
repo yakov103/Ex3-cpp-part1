@@ -1,6 +1,8 @@
+
 #include <iostream>
 #include <vector> 
 #include <stdexcept> 
+
 
 using namepsace std; 
 
@@ -11,7 +13,11 @@ namespace zich {
         public :
         vector <double > data; 
         int rows ; 
-        int cols ;     
+        int cols ;
+
+        double multiplication (Matrix & a , Matrix & b );
+        double sumOfMat ();
+
         Matrix (const vector<double> newData, const int newRow, const int newCol); 
         Matrix operator+(const Matrix &b);
         Matrix &operator++();
@@ -35,7 +41,6 @@ namespace zich {
 
 
     }
-
 
 
 
