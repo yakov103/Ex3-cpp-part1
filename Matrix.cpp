@@ -9,6 +9,9 @@ namespace zich {
         if (newRow * newCol != newData.size()){
             throw runtime_error("size should be in the amount of the value");
         }
+        if (newData.empty()){
+            throw runtime_error("cannot work with empty vector");
+        }
 
         this->data = newData;
         this->row = newRow;
