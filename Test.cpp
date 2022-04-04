@@ -48,6 +48,27 @@ TEST_CASE("good inputs ")
     Matrix test31(test3, 3, 3);
     CHECK((mat == test31));
 
+    // check - opertation
+    std::vector <double> minusTest1 = {4, 1, 1, 1, 4, 1, 1, 1, 4};
+    Matrix minusTestMatrix(minusTest1,3,3);
+    std::vector <double> zero_mat_vector = {0,0,0,0,0,0,0,0,0};
+    Matrix zeroMatrix(zero_mat_vector,3,3);
+    minusTestMatrix = minusTestMatrix-test31;
+    CHECK( (minusTestMatrix == zeroMatrix));
+
+    // check -- operation
+    std::vector <double> vectorOfOne = {1,1,1,1,1,1,1,1,1};
+    Matrix oneMatrix(vectorOfOne,3,3);
+    oneMatrix--;
+    CHECK((oneMatrix == zeroMatrix));
+    oneMatrix++;
+    oneMatrix++;
+    zeroMatrix++;
+    minusTestMatrix++;
+    minusTestMatrix = minusTestMatrix + zeroMatrix;  // after making them matrix of 1 , the sum should be matrix of 2
+    // sum matrix
+    CHECK (minusTestMatrix == oneMatrix);
+
 
 
     //check multiplication
