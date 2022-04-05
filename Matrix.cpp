@@ -122,6 +122,7 @@ namespace zich {
             throw runtime_error("The sizes of the matrices do not match");
         }
         vector<double> n;
+        n.resize((unsigned int )(row*otherMat.col));
         Matrix newMatrix(n, row, otherMat.col);
         for (int i = 0; i < newMatrix.row; i++) {
             for (int j = 0; j < newMatrix.col; j++) {

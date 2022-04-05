@@ -34,7 +34,7 @@ TEST_CASE("good inputs ")
     Matrix restafterMultt2(resAfterMult, 3, 3);
     CHECK((matToMult1 == restafterMultt2));
 
-    // check * operator double
+    // check * operator double scaler
     std::vector<double> matDouble = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     Matrix mat3(matDouble, 3, 3);
     mat3 = mat3 * double(2.5);
@@ -72,13 +72,14 @@ TEST_CASE("good inputs ")
 
 
     //check multiplication
-//    std::vector<double> toMult1 = {3,5,7,3,2,3};
-//    Matrix toMultMat1(toMult1,3,2);
-//    std::vector<double> toMult2 = {-5,3,3,1,3,2};
-//    Matrix toMultMat2(toMult2,2,3);
-//    std::vector<double> resultMuly = {-10,24,19,-32,30,27,-7,15,12};
-//    Matrix restMalt(resultMuly,3,3);
-//    CHECK ((toMult1 == restMalt));
+    std::vector<double> toMult1 = {3,5,7,3,2,3};
+    Matrix toMultMat1(toMult1,3,2);
+    std::vector<double> toMult2 = {-5,3,3,1,3,2};
+    Matrix toMultMat2(toMult2,2,3);
+    toMultMat1 = toMultMat1*toMultMat2;
+    std::vector<double> resultMuly = {-10,24,19,-32,30,27,-7,15,12};
+    Matrix restMalt(resultMuly,3,3);
+    CHECK ((toMultMat1 == restMalt));
 
 
 }
@@ -103,6 +104,8 @@ TEST_CASE("Bad inputs"){
     Matrix mat2(testMatrix2,2,2);
     CHECK_THROWS(mat*mat2);// bad size multiplication
     CHECK_THROWS(mat2*mat);// bad size multiplication
+    CHECK_THROWS(mat+mat2); // bad sum size
+    CHECK_THROWS(mat-mat2); // bad minus size
 
 
 }
